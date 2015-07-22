@@ -11,6 +11,7 @@ namespace myBot
     public static class Manager
     {
         private static string scriptPath = String.Empty;
+        private static string appVersion = Assembly.GetEntryAssembly().GetName().Version.ToString();
 
         private static string exePath;
         private static string scriptsPath;
@@ -23,6 +24,11 @@ namespace myBot
         {
             get { return scriptPath; }
             set { scriptPath = value; }
+        }
+
+        public static string AppVersion
+        {
+            get { return appVersion; }
         }
 
         public static string ExePath

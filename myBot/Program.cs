@@ -2,13 +2,8 @@
 using MoonSharp.Interpreter.Loaders;
 using myBot.Managers;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using WatiN.Core;
 
 namespace myBot
@@ -38,14 +33,14 @@ namespace myBot
         {
             Console.Title = "myBot Studio";
 
-            FancyConsole.WriteLine("Loading version 1.00 (07/18/2015)...", ConsoleColor.Gray);
+            FancyConsole.WriteLine("Loading version " + Manager.AppVersion + "...", ConsoleColor.Gray);
             FancyConsole.WriteLine();
-            FancyConsole.WriteLine("|============================================================================|", ConsoleColor.Magenta);
-            FancyConsole.WriteLine("|==|                         ____________________                         |==|", ConsoleColor.Magenta);
-            FancyConsole.WriteLine("|==|                             myBot Studio                             |==|", ConsoleColor.Magenta);
-            FancyConsole.WriteLine("|==|                          Programmed by Devn                          |==|", ConsoleColor.Magenta);
-            FancyConsole.WriteLine("|==|                                                                      |==|", ConsoleColor.Magenta);
-            FancyConsole.WriteLine("|============================================================================|", ConsoleColor.Magenta);
+            FancyConsole.WriteLine("╔══╦══════════════════════════════════════════════════════════════════════╦══╗", ConsoleColor.Magenta);
+            FancyConsole.WriteLine("║██║                        ╔════════════════════╗                        ║██║", ConsoleColor.Magenta);
+            FancyConsole.WriteLine("║██║                        ║       myBot        ║                        ║██║", ConsoleColor.Magenta);
+            FancyConsole.WriteLine("║██║                        ║ Programmed by Devn ║                        ║██║", ConsoleColor.Magenta);
+            FancyConsole.WriteLine("║██║                        ╚════════════════════╝                        ║██║", ConsoleColor.Magenta);
+            FancyConsole.WriteLine("╚══╩══════════════════════════════════════════════════════════════════════╩══╝", ConsoleColor.Magenta);
             FancyConsole.WriteLine();
 
             Initialize();
@@ -105,7 +100,7 @@ namespace myBot
         {
             FancyConsole.WriteLine("Type 'help' for a list of commands...", ConsoleColor.Cyan);
             string cmd = FancyConsole.GetInput("What would you like to do: ").Trim().ToLower();
-            
+
             switch (cmd)
             {
                 case "r":
@@ -135,7 +130,7 @@ namespace myBot
                     FancyConsole.WriteLine("Available console commands:", ConsoleColor.Cyan);
                     FancyConsole.WriteLine("    run    = Run a specified script.", ConsoleColor.Yellow);
                     FancyConsole.WriteLine("    update = Update application.", ConsoleColor.Yellow);
-                    FancyConsole.WriteLine("    debug  = Enter debug mode to test lua functions.", ConsoleColor.Yellow);
+                    FancyConsole.WriteLine("    debug  = Enter debug mode to test Lua functions.", ConsoleColor.Yellow);
                     FancyConsole.WriteLine("    help   = Show all available console commands.", ConsoleColor.Yellow);
                     FancyConsole.WriteLine("    exit   = Exit application.", ConsoleColor.Yellow);
                     FancyConsole.WriteLine();
@@ -161,7 +156,7 @@ namespace myBot
             bool exit = false;
 
             scriptPath = String.Empty;
-            string[] scripts = Directory.GetFiles(Path.Combine(Manager.ScriptsPath), "*.lua");
+            string[] scripts = Directory.GetFiles(Path.Combine(Manager.ScriptsPath), "*.Lua");
 
             if (scripts.Length >= 1)
             {
@@ -333,7 +328,7 @@ namespace myBot
 
             script = new Script();
             ((ScriptLoaderBase)script.Options.ScriptLoader).IgnoreLuaPathGlobal = true;
-            ((ScriptLoaderBase)script.Options.ScriptLoader).ModulePaths = new string[] { String.Format("{0}\\?", Manager.LibsPath), String.Format("{0}\\?.lua", Manager.LibsPath) };
+            ((ScriptLoaderBase)script.Options.ScriptLoader).ModulePaths = new string[] { String.Format("{0}\\?", Manager.LibsPath), String.Format("{0}\\?.Lua", Manager.LibsPath) };
 
             FancyConsole.WriteLine("Setting up API...");
 
@@ -413,10 +408,8 @@ namespace myBot
             if (script.Globals["__" + function] != null)
                 Helpers.Run(() => script.Call(script.Globals["__" + function], args));
 
-            if (script.Globals[function] == null)
-                return;
-
-            Helpers.Run(() => script.Call(script.Globals[function], args));
+            if (script.Globals[function] != null)
+                Helpers.Run(() => script.Call(script.Globals[function], args));
         }
 
         private static void Close()
@@ -427,7 +420,7 @@ namespace myBot
             FancyConsole.WriteLine("| Thank you for using my application!                                        |", ConsoleColor.Magenta);
             FancyConsole.WriteLine("|                                                                            |", ConsoleColor.Magenta);
             FancyConsole.WriteLine("| - Uses WatiN for web testing.                                              |", ConsoleColor.Magenta);
-            FancyConsole.WriteLine("| - Uses Moonsharp for lua interpreter.                                      |", ConsoleColor.Magenta);
+            FancyConsole.WriteLine("| - Uses MoonSharp for Lua interpreter.                                      |", ConsoleColor.Magenta);
             FancyConsole.WriteLine("|                                                                            |", ConsoleColor.Magenta);
             FancyConsole.WriteSeparator(ConsoleColor.Magenta);
             FancyConsole.WriteLine();

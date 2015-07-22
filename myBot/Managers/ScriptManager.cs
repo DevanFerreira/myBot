@@ -30,6 +30,7 @@ namespace myBot.Managers
         {
             script.Globals["FILE_NAME"] = Path.GetFileName(Manager.ScriptPath);
 
+            script.Globals["APP_VERSION"] = Manager.AppVersion;
             script.Globals["LOCAL_PATH"] = Manager.ExePath;
             script.Globals["SCRIPT_PATH"] = Manager.ScriptsPath;
             script.Globals["LIB_PATH"] = Manager.LibsPath;
